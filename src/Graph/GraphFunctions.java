@@ -247,4 +247,32 @@ public class GraphFunctions {
         } 
         printSolution(dist, V); 
     } 
+    
+    public int minDistance = 0;
+    public String greedyRoute = "";
+    public void greedy(Vertex origin, Vertex destiny){
+
+        if(origin.state && origin == destiny){
+            return; 
+        }
+        
+        Arc auxA = origin.sigA;
+        int minD = Integer.MAX_VALUE;
+        Arc minA = null;
+        
+        while(auxA!= null){
+            if(auxA.weigth< minD){
+                minA = auxA;
+                minD = auxA.weigth;
+            }
+            auxA = auxA.sigA;
+        }
+        
+        if(minA!=null){
+            greedyRoute = greedyRoute + minA.destiny.id + "-->";
+            minDistance = minDistance + minA.weigth;
+            greedy(minA.destiny, destiny);
+        }
+        
+    }
 }
