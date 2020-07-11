@@ -63,6 +63,16 @@ public class Main {
             aux = aux.sigV;
         }
         
+        int[][] matrizmieo = graphFunctions.converterDijkstra(graphFunctions.index, num);
+        System.out.println("\n\n===========");
+        for (int i = 0; i < matrizmieo.length; ++i) {
+            for (int j = 0; j < matrizmieo.length; ++j) {
+                System.out.print(matrizmieo[i][j]+"    ");
+            }
+            System.out.println("");
+        }
+        System.out.println("===========\n\n");
         
+        graphFunctions.dijkstra(matrizmieo, 2);
     }
 }
