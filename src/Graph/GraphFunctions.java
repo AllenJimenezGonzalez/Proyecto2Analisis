@@ -247,12 +247,18 @@ public class GraphFunctions {
         } 
         printSolution(dist, V); 
     } 
-    
+    public void cleanMarks(){
+        Vertex auxV = index;
+        while(auxV != null){
+            auxV.state = false;
+            auxV = auxV.sigV;
+        }
+    }
     public int minDistance = 0;
     public String greedyRoute = "";
     public void greedy(Vertex origin, Vertex destiny){
 
-        if(origin.state && origin == destiny){
+        if(origin.state == true || origin == destiny){
             return; 
         }
         
@@ -269,9 +275,15 @@ public class GraphFunctions {
         }
         
         if(minA!=null){
-            greedyRoute = greedyRoute + minA.destiny.id + "-->";
-            minDistance = minDistance + minA.weigth;
-            greedy(minA.destiny, destiny);
+            origin.state = true;
+            try{
+                greedyRoute = greedyRoute + minA.destiny.id + "-->";
+                minDistance = minDistance + minA.weigth;
+                greedy(minA.destiny, destiny);
+            }
+           catch(StackOverflowError stoerr){
+                System.out.println(":(");
+            }
         }
         
     }

@@ -75,6 +75,7 @@ public class Main {
         
         graphFunctions.dijkstra(matrizmieo, 2);
         
+        graphFunctions.cleanMarks();
         graphFunctions.greedy(graphFunctions.searchVertex(1), graphFunctions.searchVertex(10));
         System.out.println("--------------Greedy--------------");
         System.out.println(graphFunctions.greedyRoute);
