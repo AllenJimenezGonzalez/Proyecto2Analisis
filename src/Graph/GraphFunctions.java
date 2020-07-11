@@ -258,7 +258,7 @@ public class GraphFunctions {
     public String greedyRoute = "";
     public void greedy(Vertex origin, Vertex destiny){
 
-        if(origin.state == true || origin == destiny){
+        if(origin.state || origin == destiny){
             return; 
         }
         
@@ -276,15 +276,9 @@ public class GraphFunctions {
         
         if(minA!=null){
             origin.state = true;
-            try{
-                greedyRoute = greedyRoute + minA.destiny.id + "-->";
-                minDistance = minDistance + minA.weigth;
-                greedy(minA.destiny, destiny);
-            }
-           catch(StackOverflowError stoerr){
-                System.out.println(":(");
-            }
+            greedyRoute = greedyRoute + minA.destiny.id + "-->";
+            minDistance = minDistance + minA.weigth;
+            greedy(minA.destiny, destiny);
         }
-        
     }
 }
