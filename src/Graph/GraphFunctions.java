@@ -106,8 +106,10 @@ public class GraphFunctions {
 
     public String shortRoute = "";
     public int minRC = 0;
-
-    public void vorazShortRoute(Vertex aux, Vertex destiny, String route, int weight) {
+    public int contadorBacktracking = 0;
+    
+    public void BacktrackingShortRoute(Vertex aux, Vertex destiny, String route, int weight) {
+        
         if ((aux != null) && (!aux.state)) {
             if (aux == destiny) {
                 if ((shortRoute.equals("")) || (minRC > weight)) {
@@ -119,7 +121,8 @@ public class GraphFunctions {
             aux.state = true;
             Arc auxA = aux.sigA;
             while (auxA != null) {
-                vorazShortRoute(auxA.destiny, destiny, route + "-" + aux.id, weight + auxA.weigth);
+                contadorBacktracking++;
+                BacktrackingShortRoute(auxA.destiny, destiny, route + "-" + aux.id, weight + auxA.weigth);
                 auxA = auxA.sigA;
             }
             aux.state = false;
@@ -162,45 +165,7 @@ public class GraphFunctions {
         }
         return graph;
     }
-    
-    public void floydWarshall(int graph[][], int num) {
-        int dist[][] = new int[num][num];
-        int i, j, k;
-        
-        for (i = 0; i < num; i++) {
-            for (j = 0; j < num; j++) {
-                dist[i][j] = graph[i][j];
-            }
-        }
-        for (k = 0; k < num; k++) {
-
-            for (i = 0; i < num; i++) {
-
-                for (j = 0; j < num; j++) {
-
-                    if (dist[i][k] + dist[k][j] < dist[i][j]) {
-                        dist[i][j] = dist[i][k] + dist[k][j];
-                    }
-                }
-            }
-        }
-        printSolution(dist, num);
-    }
-    
-    public void printSolution(int dist[][], int vertexNumber){ 
-        for (int i=0; i<vertexNumber; ++i) 
-        { 
-            for (int j=0; j<vertexNumber; ++j) 
-            { 
-                if (dist[i][j]==9999) 
-                    System.out.print("NO   "); 
-                else
-                    System.out.print(dist[i][j]+"   "); 
-            } 
-            System.out.println(); 
-        } 
-    } 
-    
+   
     static final int V = 10; 
     public int minDistance(int dist[], Boolean sptSet[]){      
         int min = Integer.MAX_VALUE, min_index = -1; 
@@ -221,7 +186,7 @@ public class GraphFunctions {
             System.out.println(i+1 + " tt " + dist[i]); 
     } 
 
-    public void dijkstra(int graph[][], int src) { 
+    public void dinamicDijkstraShortRoute(int graph[][], int src) { 
         int dist[] = new int[V];
 
         Boolean sptSet[] = new Boolean[V]; 
@@ -254,31 +219,61 @@ public class GraphFunctions {
             auxV = auxV.sigV;
         }
     }
+    
+    
     public int minDistance = 0;
     public String greedyRoute = "";
-    public void greedy(Vertex origin, Vertex destiny){
+    public void greedyShortRoute(Vertex origin, Vertex destiny){
 
         if(origin.state || origin == destiny){
             return; 
         }
-        
+        origin.state = true;
         Arc auxA = origin.sigA;
         int minD = Integer.MAX_VALUE;
         Arc minA = null;
-        
-        while(auxA!= null){
-            if(auxA.weigth< minD){
+
+        while (auxA != null) {
+            if (auxA.weigth < minD && !auxA.destiny.state) {
                 minA = auxA;
                 minD = auxA.weigth;
             }
             auxA = auxA.sigA;
         }
-        
-        if(minA!=null){
-            origin.state = true;
+
+        if (minA != null) {
+
             greedyRoute = greedyRoute + minA.destiny.id + "-->";
             minDistance = minDistance + minA.weigth;
-            greedy(minA.destiny, destiny);
+            greedyShortRoute(minA.destiny, destiny);
+
+        }
+    }
+
+    public String shortRoute2 = "";
+    public int minRC2 = Integer.MAX_VALUE;
+    public int contadorRamificacion = 0;
+    
+    public void shortRouteRamification(Vertex aux, Vertex destiny, String route, int weight) {
+        
+        if ((aux != null) && (!aux.state)) {
+            if (aux == destiny) {
+                if ((shortRoute2.equals("")) || (minRC2 > weight)) {
+                    shortRoute2 = route + "-" + destiny.id;
+                    minRC2 = weight;
+                }
+                return;
+            }
+            aux.state = true;
+            Arc auxA = aux.sigA;
+            while (auxA != null) {
+                if( weight + auxA.weigth < minRC2){
+                    contadorRamificacion ++;
+                    shortRouteRamification(auxA.destiny, destiny, route + "-" + aux.id, weight + auxA.weigth);
+                }
+                auxA = auxA.sigA;
+            }
+            aux.state = false;
         }
     }
 }

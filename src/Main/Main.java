@@ -9,7 +9,7 @@ public class Main {
     static GraphFunctions graphFunctions = GraphFunctions.getInstance();
 
     public static void main(String[] args) throws IOException {
-        insertGraph(10);
+        insertGraph(5000);
         //measureGraph(200);
         //measureGraph(400);
         //measureGraph(800);
@@ -44,10 +44,10 @@ public class Main {
             origin = origin.sigV;
         }
         
-        graphFunctions.vorazShortRoute(graphFunctions.index, graphFunctions.last, graphFunctions.shortRoute, graphFunctions.minRC);
-        System.out.println("\nLa Ruta corta usando el algoritmo Voraz es de > ");
-        System.out.println(graphFunctions.shortRoute);
-        System.out.println("=====================\n");
+        //graphFunctions.BacktrackingShortRoute(graphFunctions.index, graphFunctions.last, graphFunctions.shortRoute, graphFunctions.minRC);
+       //System.out.println("\nLa Ruta corta usando el algoritmo Voraz es de > ");
+        //System.out.println(graphFunctions.shortRoute);
+        //System.out.println("=====================\n");
         
         //AMPLITUD, TODOS LOS VERTICES CON SUS ARCOS
         
@@ -73,12 +73,22 @@ public class Main {
         }
         System.out.println("===========\n\n");
         
-        graphFunctions.dijkstra(matrizmieo, 2);
+        //graphFunctions.dinamicShortRoute(matrizmieo, 2);
         
-        graphFunctions.cleanMarks();
-        graphFunctions.greedy(graphFunctions.searchVertex(1), graphFunctions.searchVertex(10));
+        //prueba Voraz
+       graphFunctions.cleanMarks();
+        graphFunctions.greedyShortRoute(graphFunctions.searchVertex(1), graphFunctions.searchVertex(10));
         System.out.println("--------------Greedy--------------");
         System.out.println(graphFunctions.greedyRoute);
         
+        //Prueba backtracking
+       // graphFunctions.BacktrackingShortRoute(graphFunctions.searchVertex(1), graphFunctions.searchVertex(10), "", 0);
+        //System.out.println("backtracking: " + graphFunctions.contadorBacktracking);
+        //System.out.println("backtracking rout: " + graphFunctions.shortRoute);
+        
+        //Prueba ramificacion
+        //graphFunctions.shortRouteRamification(graphFunctions.searchVertex(1), graphFunctions.searchVertex(10), "", 0);
+        //System.out.println("ramificacion: " + graphFunctions.contadorRamificacion);
+        //System.out.println("ramifcicacion ruta " + graphFunctions.shortRoute2);
     }
 }
