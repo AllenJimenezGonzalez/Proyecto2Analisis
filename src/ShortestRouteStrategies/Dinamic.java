@@ -101,15 +101,19 @@ public class Dinamic {
                 }
             }
         }
-        printSolution(dist, V);
+        printSolution(dist, V, src); //como no es requerido para crear la solucion del metodo no se cuenta.
     }
 
-    public void printSolution(int dist[], int n) {
-        System.out.println("Vertex   Distance from Source");
-        instructions+=3;
-        memory+=32;
+    public void printSolution(int dist[], int n, int src) {
         for (int i = 0; i < V; i++) {
-            System.out.println(i + 1 + " tt " + dist[i]);
+            String result = "";
+            if(dist[i] == 0){
+                result = "no existe";
+            }else{
+                result = String.valueOf(dist[i]);
+            }
+            String string = String.format("Ruta desde %d hacia %d peso: %s", src, (i+1), result);
+            System.out.println(string);
         }
     }
     

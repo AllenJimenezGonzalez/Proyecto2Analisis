@@ -58,30 +58,46 @@ public class Main {
         }  
         
         int[][] matriz = dinamic.converterDijkstra(graphFunctions.index, num);
-        System.out.println("\n\n===========");
+
         for (int i = 0; i < matriz.length; ++i) {
             for (int j = 0; j < matriz.length; ++j) {
                 System.out.print(matriz[i][j]+"    ");
             }
             System.out.println("");
         }
-        System.out.println("===========\n\n");
-        
+
+        System.out.println("\n\n----------------------------------------\n");
         //dinamic.Dijkstra(matriz, 2);
-        
+        graphFunctions.cleanMarks();
+        dinamic.setV(num);
+        System.out.println("Ruta con dinamico: ");
+        dinamic.Dijkstra(matriz, 1);
+        System.out.println("\n----------------------------------------\n");
         //prueba Voraz
-       graphFunctions.cleanMarks();
+        graphFunctions.cleanMarks();
         greedy.greedyShortRoute(graphFunctions.index, graphFunctions.last);
-        System.out.println("--------------Greedy--------------");
-        System.out.println(greedy.greedyRoute);
-        
+        System.out.println("Ruta con voraz: " + greedy.greedyRoute);
+        System.out.println("\n----------------------------------------\n");
         //Prueba backtracking
+        graphFunctions.cleanMarks();
         backtracking.BacktrackingShortRoute(graphFunctions.index, graphFunctions.last, "", 0);
-        System.out.println("backtracking rout: " + backtracking.shortRoute);
+        System.out.println("Ruta con backtracking: " + backtracking.shortRoute);
+        System.out.println("\n----------------------------------------\n");
         
         //Prueba ramificacion
+        graphFunctions.cleanMarks();
         branchAndBound.shortRouteRamification(graphFunctions.index, graphFunctions.last, "", 0);
         System.out.println("Ruta con ramificacion " + branchAndBound.shortRoute);
+        
+        System.out.println("\n----------------------------------------\n"
+                + "Cantidad de cosas Backtracking: \nInstrucciones: "+backtracking.instructions+ "\nBits: "+backtracking.memory + " bits");
+        System.out.println("\n----------------------------------------\n"
+                + "Cantidad de cosas Greedy: \nInstrucciones: "+greedy.instructions+ "\nBits: "+greedy.memory + " bits");
+        System.out.println("\n----------------------------------------\n"
+                + "Cantidad de cosas Branch and bound: \nInstrucciones: "+branchAndBound.instructions+ "\nBits: "+branchAndBound.memory + " bits");
+        System.out.println("\n----------------------------------------\n"
+                + "Cantidad de cosas Dijkstra: \nInstrucciones: "+dinamic.instructions+ "\nBits: "+dinamic.memory + " bits");
+        
     }
 
     //AMPLITUD, TODOS LOS VERTICES CON SUS ARCOS
