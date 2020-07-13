@@ -25,14 +25,22 @@ public class Dinamic {
 
     public int minDistance(int dist[], Boolean sptSet[]) {
         int min = Integer.MAX_VALUE, min_index = -1;
+        instructions += 32;
 
         for (int v = 0; v < V; v++) {
+            instructions += V;
+            memory += (V+1) * 32;
+            
             if (sptSet[v] == false && dist[v] <= min) {
+                instructions ++;
+                
                 min = dist[v];
                 min_index = v;
+                
+                instructions += 2;
+                memory += 64;
             }
         }
-
         return min_index;
     }
 
