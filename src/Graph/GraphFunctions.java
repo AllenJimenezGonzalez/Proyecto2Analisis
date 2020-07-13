@@ -103,4 +103,12 @@ public class GraphFunctions {
         int intNumber = (int) number;
         return intNumber;
     }
+    
+    public void cleanMarks(){
+        Vertex auxV = index;
+        while(auxV != null){
+            auxV.state = false;
+            auxV = auxV.sigV;
+        }
+    }
 }

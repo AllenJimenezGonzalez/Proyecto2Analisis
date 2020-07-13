@@ -67,13 +67,13 @@ public class Main {
         }
         System.out.println("===========\n\n");
         
-        dinamic.Dijkstra(matriz, 2);
+        //dinamic.Dijkstra(matriz, 2);
         
         //prueba Voraz
-       //graphFunctions.cleanMarks();
-        //graphFunctions.greedyShortRoute(graphFunctions.searchVertex(1), graphFunctions.searchVertex(10));
-        //System.out.println("--------------Greedy--------------");
-        //System.out.println(graphFunctions.greedyRoute);
+       graphFunctions.cleanMarks();
+        greedy.greedyShortRoute(graphFunctions.index, graphFunctions.last);
+        System.out.println("--------------Greedy--------------");
+        System.out.println(greedy.greedyRoute);
         
         //Prueba backtracking
         backtracking.BacktrackingShortRoute(graphFunctions.index, graphFunctions.last, "", 0);
