@@ -14,28 +14,48 @@ import Graph.Vertex;
  */
 public class Greedy {
     
+    public int memory = 0;
+    public int instructions = 0;
+
     public int minDistance = 0;
     public String greedyRoute = "";
     
     public void greedyShortRoute(Vertex origin, Vertex destiny){
+        instructions +=2;
         if(origin.state || origin == destiny){
             return; 
         }
+
         origin.state = true;
         Arc auxA = origin.sigA;
         int minD = Integer.MAX_VALUE;
         Arc minA = null;
+        
+        memory+=1;
+        memory+=64;
+        memory+=32;
+        
+        instructions +=3;
+        
+        instructions ++;
         while (auxA != null) {
+            instructions ++;
+            instructions ++;
             if (auxA.weigth < minD && !auxA.destiny.state) {
                 minA = auxA;
                 minD = auxA.weigth;
+                instructions +=2;
             }
+            instructions ++;
             auxA = auxA.sigA;
         }
+        instructions ++;
         if (minA != null) {
             greedyRoute = greedyRoute + minA.destiny.id + "-->";
             minDistance = minDistance + minA.weigth;
+            instructions+=2;
             greedyShortRoute(minA.destiny, destiny);
         }
     }
+    
 }
