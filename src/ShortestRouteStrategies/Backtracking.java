@@ -14,7 +14,9 @@ import Graph.Vertex;
  */
 public class Backtracking {
   
-    public int memory = 0;
+    public int counter;
+    
+    public long memory = 0;
     public int instructions = 0;
     
     
@@ -26,13 +28,19 @@ public class Backtracking {
         if ((aux != null) && (!aux.state)) {
             instructions ++;
             if (aux == destiny) {
-                instructions += 2;
+                instructions += 2; 
+                counter++;
+                if(counter <=5){
+                    System.out.println("Ruta " + route);
+                }
+                
                 if ((shortRoute.equals("")) || (minRC > weight)) {
                     shortRoute = route + "-" + destiny.id;
                     memory += shortRoute.length() * 8;
                     minRC = weight;
                     memory += 32;                
                     instructions += 2;
+                   
                 }
                 return;
             }
@@ -43,14 +51,15 @@ public class Backtracking {
             Arc auxA = aux.sigA;
             instructions ++;
             memory += 64;
-            
             instructions++;
             while (auxA != null) {
                 instructions++;
                 BacktrackingShortRoute(auxA.destiny, destiny, route + "-" + aux.id, weight + auxA.weigth);
+
                 auxA = auxA.sigA;
                 instructions ++;
                 memory += 64;
+                
             }
             aux.state = false;
             memory ++;

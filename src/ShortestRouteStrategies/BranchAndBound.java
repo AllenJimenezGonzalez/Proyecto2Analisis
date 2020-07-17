@@ -14,10 +14,12 @@ import Graph.Vertex;
  */
 public class BranchAndBound {
     
-   public String shortRoute = "";
+    public int counter =0;
+    
+    public String shortRoute = "";
     public int minRC = Integer.MAX_VALUE;
     
-    public int memory = 0;
+    public long memory = 0;
     public int instructions = 0;
     public void shortRouteRamification(Vertex aux, Vertex destiny, String route, int weight) {
         instructions += 2;
@@ -47,11 +49,17 @@ public class BranchAndBound {
                 if (weight + auxA.weigth < minRC) {
                     instructions ++;
                     shortRouteRamification(auxA.destiny, destiny, route + "-" + aux.id, weight + auxA.weigth);
+                }else{
+                    counter++;
+                    if(counter<=5){
+                        System.out.println("Ruta podada desde: "+aux.id+" hacia "+auxA.destiny.id);
+                    }
                 }
                 auxA = auxA.sigA;
                 instructions ++;
                 memory += 64;
             }
+            
             aux.state = false;
             memory ++;
             instructions ++;

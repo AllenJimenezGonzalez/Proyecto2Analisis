@@ -13,8 +13,9 @@ import Graph.Vertex;
  * @author JansMorphy
  */
 public class Greedy {
+    public int counter;
     
-    public int memory = 0;
+    public long memory = 0;
     public int instructions = 0;
 
     public int minDistance = 0;
@@ -51,7 +52,8 @@ public class Greedy {
         }
         instructions ++;
         if (minA != null) {
-            greedyRoute = greedyRoute + minA.destiny.id + "-->";
+            counter += minA.weigth;
+            greedyRoute = greedyRoute + minA.destiny.id + "- Peso: "+ minA.weigth+"->";
             minDistance = minDistance + minA.weigth;
             instructions+=2;
             greedyShortRoute(minA.destiny, destiny);

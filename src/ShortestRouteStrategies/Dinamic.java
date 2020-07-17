@@ -15,7 +15,7 @@ import Graph.Vertex;
 public class Dinamic {
     static int V = 0;
 
-    public int memory = 0;
+    public long memory = 0;
     public int instructions = 0;
 
     
