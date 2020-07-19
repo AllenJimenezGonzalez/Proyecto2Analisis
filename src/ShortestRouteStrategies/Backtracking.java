@@ -14,27 +14,30 @@ import Graph.Vertex;
  */
 public class Backtracking {
   
-    public int counter;
+    public int counter;                 //This variable counts all the routes that from an origin to destiny
     
-    public long memory = 0;
-    public int instructions = 0;
+    public long memory = 0;             //This variable counts the bits that consume the algorithm 
+    public int instructions = 0;        //This variable counts the instructions executed by the methods
     
     
-    public String shortRoute = "";
-    public int minRC = 0;
+    public String shortRoute = "";      //This variable save the shortest route between an origin to destiny
+    public int minRC = 0;               //This variable save the total weigth of the route between an origin to destiny
+    
+    
+    //This method take every posible route to find the shortest route of the graph
     
     public void BacktrackingShortRoute(Vertex aux, Vertex destiny, String route, int weight) {
         instructions += 2;
         if ((aux != null) && (!aux.state)) {
             instructions ++;
-            if (aux == destiny) {
+            if (aux == destiny){ // It filters every route that allow me get to destiny
                 instructions += 2; 
                 counter++;
                 if(counter <=5){
                     System.out.println("Ruta " + route);
                 }
                 
-                if ((shortRoute.equals("")) || (minRC > weight)) {
+                if ((shortRoute.equals("")) || (minRC > weight)) { // Verifies if the actual is shortest than the old one
                     shortRoute = route + "-" + destiny.id;
                     memory += shortRoute.length() * 8;
                     minRC = weight;

@@ -13,13 +13,13 @@ import Graph.Vertex;
  * @author JansMorphy
  */
 public class Greedy {
-    public int counter;
+    public int counter;                 //This variable counts the weigth of the route
     
-    public long memory = 0;
-    public int instructions = 0;
+    public long memory = 0;             //This variable counts the bits that consume the algorithm 
+    public int instructions = 0;        //This variable counts the instructions executed by the methods
 
-    public int minDistance = 0;
-    public String greedyRoute = "";
+    public int minDistance = 0;         //This variable save the total weigth of the route between an origin to destiny
+    public String greedyRoute = "";     //This variable save the shortest route between an origin to destiny
     
     public void greedyShortRoute(Vertex origin, Vertex destiny){
         instructions +=2;
@@ -42,7 +42,7 @@ public class Greedy {
         while (auxA != null) {
             instructions ++;
             instructions ++;
-            if (auxA.weigth < minD && !auxA.destiny.state) {
+            if (auxA.weigth < minD && !auxA.destiny.state) { // This verifies which is the destiny with the ligther weigth 
                 minA = auxA;
                 minD = auxA.weigth;
                 instructions +=2;

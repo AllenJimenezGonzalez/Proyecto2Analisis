@@ -13,23 +13,24 @@ import Graph.Vertex;
  * @author JansMorphy
  */
 public class BranchAndBound {
-    
-    public int counter =0;
-    
-    public String shortRoute = "";
-    public int minRC = Integer.MAX_VALUE;
-    
-    public long memory = 0;
-    public int instructions = 0;
+
+    public int counter = 0;                     //This variable counts all the routes that were pruned
+
+    public String shortRoute = "";              //This variable save the shortest route between an origin to destiny
+    public int minRC = Integer.MAX_VALUE;       //This variable save the total weigth of the route between an origin to destiny
+
+    public long memory = 0;                     //This variable counts the bits that consume the algorithm 
+    public int instructions = 0;                //This variable counts the instructions executed by the methods
+
     public void shortRouteRamification(Vertex aux, Vertex destiny, String route, int weight) {
         instructions += 2;
         if ((aux != null) && (!aux.state)) {
-            instructions ++;
-            if (aux == destiny) {
+            instructions++;
+            if (aux == destiny) { // It filters every route that allow me get to destiny
                 instructions += 2;
-                if ((shortRoute.equals("")) || (minRC > weight)) {
+                if ((shortRoute.equals("")) || (minRC > weight)) { // Verifies if the actual is shortest than the old one
                     shortRoute = route + "-" + destiny.id;
-                    minRC = weight; 
+                    minRC = weight;
                     memory += 32;
                     instructions += 2;
                 }
@@ -42,28 +43,28 @@ public class BranchAndBound {
             Arc auxA = aux.sigA;
             instructions++;
             memory += 64;
-            
+
             instructions++;
             while (auxA != null) {
                 instructions++;
-                if (weight + auxA.weigth < minRC) {
-                    instructions ++;
+                if (weight + auxA.weigth < minRC) { // It verifies if the next route is bigger than acutal then it will be pruned
+                    instructions++;
                     shortRouteRamification(auxA.destiny, destiny, route + "-" + aux.id, weight + auxA.weigth);
-                }else{
+                } else {
                     counter++;
-                    if(counter<=5){
-                        System.out.println("Ruta podada desde: "+aux.id+" hacia "+auxA.destiny.id);
+                    if (counter <= 5) {
+                        System.out.println("Ruta podada desde: " + aux.id + " hacia " + auxA.destiny.id);
                     }
                 }
                 auxA = auxA.sigA;
-                instructions ++;
+                instructions++;
                 memory += 64;
             }
-            
+
             aux.state = false;
-            memory ++;
-            instructions ++;
+            memory++;
+            instructions++;
         }
     }
-    
+
 }

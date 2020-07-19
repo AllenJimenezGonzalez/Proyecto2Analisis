@@ -13,30 +13,29 @@ import Graph.Vertex;
  * @author JansMorphy
  */
 public class Dinamic {
-    static int V = 0;
 
-    public long memory = 0;
-    public int instructions = 0;
+    static int numVertex = 0;                       //This variable counts 
+    public long memory = 0;                 //This variable counts the bits that consume the algorithm 
+    public int instructions = 0;            //This variable counts the instructions executed by the methods
 
-    
-    public static void setV(int V) {
-        Dinamic.V = V;
+    public static void setNumVertex(int numVertex) {
+        Dinamic.numVertex = numVertex;
     }
 
-    public int minDistance(int dist[], Boolean sptSet[]) {
+    public int minDistance(int dist[], Boolean sptSet[]) { // Verifies if the actual is shortest than the old one
         int min = Integer.MAX_VALUE, min_index = -1;
         instructions += 32;
 
-        for (int v = 0; v < V; v++) {
-            instructions += V;
-            memory += (V+1) * 32;
-            
+        for (int v = 0; v < numVertex; v++) {
+            instructions += numVertex;
+            memory += (numVertex + 1) * 32;
+
             if (sptSet[v] == false && dist[v] <= min) {
-                instructions ++;
-                
+                instructions++;
+
                 min = dist[v];
                 min_index = v;
-                
+
                 instructions += 2;
                 memory += 64;
             }
@@ -44,7 +43,7 @@ public class Dinamic {
         return min_index;
     }
 
-    public int[][] converterDijkstra(Vertex index, int size) {
+    public int[][] converterDijkstra(Vertex index, int size) { // This convert the graph class to graph matrix
         int graph[][] = new int[size][size];
 
         Vertex aux = index;
@@ -59,64 +58,62 @@ public class Dinamic {
         return graph;
     }
 
-        public void Dijkstra(int graph[][], int src) {
+    public void Dijkstra(int graph[][], int src) { 
         instructions++;
-        memory+=32*V;
-        int dist[] = new int[V];
+        memory += 32 * numVertex;
+        int resultMatrix[] = new int[numVertex];
 
         instructions++;
-        memory+=1*V;
-        Boolean sptSet[] = new Boolean[V];
+        memory += 1 * numVertex;
+        Boolean markMatrix[] = new Boolean[numVertex];
 
-        instructions+=3;
-        memory+=32;
-        for (int i = 0; i < V; i++) {
+        instructions += 3;
+        memory += 32;
+        for (int i = 0; i < numVertex; i++) { // This method fill the resultMatrix and markMatrix with default values
             instructions++;
-            dist[i] = Integer.MAX_VALUE;
+            resultMatrix[i] = Integer.MAX_VALUE;
             instructions++;
-            sptSet[i] = false;
+            markMatrix[i] = false;
         }
-        
+
         instructions++;
-        dist[src - 1] = 0;
+        resultMatrix[src - 1] = 0;
 
-        instructions+=3;
-        memory+=32;
-        for (int count = 0; count < V - 1; count++) {
-
-            instructions++;
-            memory+=32;
-            int u = minDistance(dist, sptSet);
+        instructions += 3;
+        memory += 32;
+        for (int count = 0; count < numVertex - 1; count++) {
 
             instructions++;
-            sptSet[u] = true;
+            memory += 32;
+            int ligther = minDistance(resultMatrix, markMatrix);
 
-            instructions+=3;
-            memory+=32;
-            for (int v = 0; v < V; v++) {
-                instructions+=5;
-                if (!sptSet[v] && graph[u][v] != 0
-                        && dist[u] != Integer.MAX_VALUE && dist[u] + graph[u][v] < dist[v]) {
-                    dist[v] = dist[u] + graph[u][v];
+            instructions++;
+            markMatrix[ligther] = true; // This mark the visited vertex.
+
+            instructions += 3;
+            memory += 32;
+            for (int v = 0; v < numVertex; v++) {
+                instructions += 5;
+                if (!markMatrix[v] && graph[ligther][v] != 0
+                        && resultMatrix[ligther] != Integer.MAX_VALUE && resultMatrix[ligther] + graph[ligther][v] < resultMatrix[v]) { 
+                    resultMatrix[v] = resultMatrix[ligther] + graph[ligther][v];
                 }
             }
         }
-        printSolution(dist, V, src); //como no es requerido para crear la solucion del metodo no se cuenta.
+        printSolution(resultMatrix, numVertex, src);
     }
 
-    public void printSolution(int dist[], int n, int src) {
-        for (int i = 0; i < V; i++) {
+    public void printSolution(int dist[], int n, int src) { //This method prints the solution founded by dijkstra
+        for (int i = 0; i < numVertex; i++) {
             String result = "";
-            if(dist[i] == 0){
+            if (dist[i] == 0) {
                 result = "no existe";
-            }else{
+            } else {
                 result = String.valueOf(dist[i]);
             }
-            String string = String.format("Ruta desde %d hacia %d peso: %s", src, (i+1), result);
+            String string = String.format("Ruta desde %d hacia %d peso: %s", src, (i + 1), result);
             System.out.println(string);
         }
     }
-    
 
-        
 }

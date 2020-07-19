@@ -19,15 +19,16 @@ public class Main {
     static Dinamic dinamic = new Dinamic();
 
     public static void main(String[] args) throws IOException {
-        insertGraph(5);
-        //measureGraph(20);
-        //measureGraph(40);
-        //measureGraph(80);
-        //measureGraph(150);
-        //measureGraph(300);
-        //measureGraph(500);
-        //measureGraph(800);
-        //measureGraph(1000);
+        insertGraph(10);
+        //insertGraph(10);
+        //insertGraph(20);
+        //insertGraph(40);
+        //insertGraph(80);
+        //insertGraph(150);
+        //insertGraph(300);
+        //insertGraph(500);
+        //insertGraph(800);
+        //insertGraph(1000);
     }
 
     /*
@@ -58,36 +59,40 @@ public class Main {
         }
 
         int[][] matriz = dinamic.converterDijkstra(graphFunctions.index, num);
-
+        
         for (int i = 0; i < matriz.length; ++i) {
             for (int j = 0; j < matriz.length; ++j) {
                 System.out.print(matriz[i][j] + "    ");
             }
             System.out.println("");
         }
-
+        
         System.out.println("\n\n----------------------------------------\n");
+        
         //dinamic.Dijkstra(matriz, 2);
         graphFunctions.cleanMarks();
-        dinamic.setV(num);
+        dinamic.setNumVertex(num);
         System.out.println("Ruta con dinamico: ");
         dinamic.Dijkstra(matriz, 1);
         System.out.println("\n----------------------------------------\n");
+        
         //prueba Voraz
         graphFunctions.cleanMarks();
         greedy.greedyShortRoute(graphFunctions.index, graphFunctions.last);
         System.out.println("Ruta con voraz: " + greedy.greedyRoute);
         System.out.println("\n----------------------------------------\n");
+        
         //Prueba backtracking
         graphFunctions.cleanMarks();
         backtracking.BacktrackingShortRoute(graphFunctions.index, graphFunctions.last, "", 0);
         System.out.println("Ruta con backtracking: " + backtracking.shortRoute);
         System.out.println("\n----------------------------------------\n");
+        
         //Prueba ramificacion
         graphFunctions.cleanMarks();
         branchAndBound.shortRouteRamification(graphFunctions.index, graphFunctions.last, "", 0);
         System.out.println("Ruta con ramificacion " + branchAndBound.shortRoute);
-
+   
         System.out.println("\n----------------------------------------\n"
                 + "Backtracking: \nInstrucciones: " + backtracking.instructions + "\nBits: " + backtracking.memory + " bits \nCantidad de rutas validas: " + backtracking.counter);
         System.out.println("\n----------------------------------------\n"
@@ -95,6 +100,7 @@ public class Main {
         System.out.println("\n----------------------------------------\n"
                 + "Branch and bound: \nInstrucciones: " + branchAndBound.instructions + "\nBits: " + branchAndBound.memory 
                 + " bits \nCantidad de podas: " + branchAndBound.counter);
+        
         System.out.println("\n----------------------------------------\n"
                 + "Dijkstra: \nInstrucciones: " + dinamic.instructions + "\nBits: " + dinamic.memory + " bits");
 
