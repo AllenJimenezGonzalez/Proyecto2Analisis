@@ -16,6 +16,7 @@ public class Child {
     public Vertex actualVertex;
     public Arc roadToNext;
     public Vertex nextVertex;
+    public boolean state;
     
     public Child(Vertex actualVertex,Arc roadToNext, Vertex nextVertex){
         this.actualVertex = actualVertex;

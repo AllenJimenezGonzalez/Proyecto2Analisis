@@ -69,6 +69,8 @@ public class Main {
             System.out.println("");
         }
         
+        imprimirGrafo();
+        
         System.out.println("\n\n----------------------------------------\n");
         
         //dinamic.Dijkstra(matriz, 2);
@@ -113,12 +115,13 @@ public class Main {
         
         genetic.selection(graphFunctions.index, graphFunctions.last);
         genetic.printRoutes();
-        
+        genetic.mutate();
+        genetic.printNewGen();
 
     }
 
     //AMPLITUD, TODOS LOS VERTICES CON SUS ARCOS
-    public void imprimirGrafo() {
+    public static void imprimirGrafo() {
         Vertex aux = graphFunctions.index;
         while (aux != null) {
             System.out.println("Nombre del vertice ==================> " + aux.id);
