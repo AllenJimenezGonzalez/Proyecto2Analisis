@@ -6,6 +6,7 @@ import Graph.Vertex;
 import ShortestRouteStrategies.Backtracking;
 import ShortestRouteStrategies.BranchAndBound;
 import ShortestRouteStrategies.Dinamic;
+import ShortestRouteStrategies.Genetic;
 import ShortestRouteStrategies.Greedy;
 import java.io.IOException;
 
@@ -17,6 +18,7 @@ public class Main {
     static Backtracking backtracking = new Backtracking();
     static BranchAndBound branchAndBound = new BranchAndBound();
     static Dinamic dinamic = new Dinamic();
+    static Genetic genetic = Genetic.getInstnace();
 
     public static void main(String[] args) throws IOException {
         insertGraph(10);
@@ -103,6 +105,15 @@ public class Main {
         
         System.out.println("\n----------------------------------------\n"
                 + "Dijkstra: \nInstrucciones: " + dinamic.instructions + "\nBits: " + dinamic.memory + " bits");
+        
+        
+        graphFunctions.cleanMarks();
+             
+        System.out.println("\n\n-------------------------------------------------------------------------------------");
+        
+        genetic.selection(graphFunctions.index, graphFunctions.last);
+        genetic.printRoutes();
+        
 
     }
 
