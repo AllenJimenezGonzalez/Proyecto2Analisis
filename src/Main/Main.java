@@ -18,10 +18,10 @@ public class Main {
     static Backtracking backtracking = new Backtracking();
     static BranchAndBound branchAndBound = new BranchAndBound();
     static Dinamic dinamic = new Dinamic();
-    static Genetic genetic = Genetic.getInstnace();
+    static Genetic genetic = Genetic.getInstance();
 
     public static void main(String[] args) throws IOException {
-        insertGraph(10);
+        insertGraph(1000);
         //insertGraph(10);
         //insertGraph(20);
         //insertGraph(40);
@@ -87,36 +87,42 @@ public class Main {
         System.out.println("\n----------------------------------------\n");
         
         //Prueba backtracking
-        graphFunctions.cleanMarks();
-        backtracking.BacktrackingShortRoute(graphFunctions.index, graphFunctions.last, "", 0);
-        System.out.println("Ruta con backtracking: " + backtracking.shortRoute);
-        System.out.println("\n----------------------------------------\n");
+        //graphFunctions.cleanMarks();
+        //backtracking.BacktrackingShortRoute(graphFunctions.index, graphFunctions.last, "", 0);
+        //System.out.println("Ruta con backtracking: " + backtracking.shortRoute);
+        //System.out.println("\n----------------------------------------\n");
         
         //Prueba ramificacion
         graphFunctions.cleanMarks();
         branchAndBound.shortRouteRamification(graphFunctions.index, graphFunctions.last, "", 0);
         System.out.println("Ruta con ramificacion " + branchAndBound.shortRoute);
-   
-        System.out.println("\n----------------------------------------\n"
-                + "Backtracking: \nInstrucciones: " + backtracking.instructions + "\nBits: " + backtracking.memory + " bits \nCantidad de rutas validas: " + backtracking.counter);
-        System.out.println("\n----------------------------------------\n"
-                + "Greedy: \nInstrucciones: " + greedy.instructions + "\nBits: " + greedy.memory + " bits \nPeso total del recorrido: " + greedy.counter);
-        System.out.println("\n----------------------------------------\n"
-                + "Branch and bound: \nInstrucciones: " + branchAndBound.instructions + "\nBits: " + branchAndBound.memory 
-                + " bits \nCantidad de podas: " + branchAndBound.counter);
-        
-        System.out.println("\n----------------------------------------\n"
-                + "Dijkstra: \nInstrucciones: " + dinamic.instructions + "\nBits: " + dinamic.memory + " bits");
-        
-        
-        graphFunctions.cleanMarks();
-             
-        System.out.println("\n\n-------------------------------------------------------------------------------------");
-        
+
+        System.out.println("\n----------------------------------------\n");
+
+        System.out.println("\n------------GENETIC----------------------------\n");
+
         genetic.selection(graphFunctions.index, graphFunctions.last);
         genetic.printRoutes();
         genetic.mutate();
         genetic.printNewGen();
+
+        System.out.println("\n------------------MEDICIONES----------------------\n"
+                + "Backtracking: \nInstrucciones: " + backtracking.instructions + "\nBits: " + backtracking.memory + " bits \nCantidad de rutas validas: " + backtracking.counter);
+        System.out.println("\n----------------------------------------\n"
+                + "Greedy: \nInstrucciones: " + greedy.instructions + "\nBits: " + greedy.memory + " bits \nPeso total del recorrido: " + greedy.counter);
+        System.out.println("\n----------------------------------------\n"
+                + "Branch and bound: \nInstrucciones: " + branchAndBound.instructions + "\nBits: " + branchAndBound.memory
+                + " bits \nCantidad de podas: " + branchAndBound.counter);
+
+        System.out.println("\n----------------------------------------\n"
+                + "Dijkstra: \nInstrucciones: " + dinamic.instructions + "\nBits: " + dinamic.memory + " bits");
+
+        graphFunctions.cleanMarks();
+
+        System.out.println("\n----------------------------------------\n"
+                + "Genetic: \nInstrucciones: " + genetic.instructions + "\nBits: " + genetic.memory + " bits");
+
+        System.out.println("\n\n-------------------------------------------------------------------------------------");
 
     }
 

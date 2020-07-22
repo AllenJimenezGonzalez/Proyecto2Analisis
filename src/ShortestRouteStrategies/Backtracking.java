@@ -24,6 +24,7 @@ public class Backtracking {
     public int minRC = 0;               //This variable save the total weigth of the route between an origin to destiny
     
     
+    
     //This method take every posible route to find the shortest route of the graph
     
     public void BacktrackingShortRoute(Vertex aux, Vertex destiny, String route, int weight) {
