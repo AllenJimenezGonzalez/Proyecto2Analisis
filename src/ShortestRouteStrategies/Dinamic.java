@@ -22,7 +22,7 @@ public class Dinamic {
         Dinamic.numVertex = numVertex;
     }
 
-    public int minDistance(int dist[], Boolean sptSet[]) { // Verifies if the actual is shortest than the old one
+    public int minDistance(int vertices[], Boolean marcas[]) { // Verifies if the actual is shortest than the old one
         int min = Integer.MAX_VALUE, min_index = -1;
         instructions += 32;
 
@@ -30,10 +30,10 @@ public class Dinamic {
             instructions += numVertex;
             memory += (numVertex + 1) * 32;
 
-            if (sptSet[v] == false && dist[v] <= min) {
+            if (marcas[v] == false && vertices[v] <= min) {
                 instructions++;
 
-                min = dist[v];
+                min = vertices[v];
                 min_index = v;
 
                 instructions += 2;

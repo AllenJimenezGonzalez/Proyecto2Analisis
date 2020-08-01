@@ -21,7 +21,7 @@ public class Main {
     static Genetic genetic = Genetic.getInstance();
 
     public static void main(String[] args) throws IOException {
-        insertGraph(1000);
+        insertGraph(10);
         //insertGraph(10);
         //insertGraph(20);
         //insertGraph(40);
@@ -34,7 +34,7 @@ public class Main {
     }
 
     /*
-    This will be the the class that will test both methods of the graph class.
+    This will be the the class that will test both methods   of the graph class.
     It recives by parameter an specific lenght of data to execute the iterative
     and the recursive method. Also at the end it will send the parameters to a 
     functions that show us the results.
