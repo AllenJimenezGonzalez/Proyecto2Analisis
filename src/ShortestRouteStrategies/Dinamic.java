@@ -22,7 +22,7 @@ public class Dinamic {
         Dinamic.numVertex = numVertex;
     }
 
-    public int minDistance(int vertices[], Boolean marcas[]) { // Verifies if the actual is shortest than the old one
+    public int minDistance(int distance[], Boolean checked[]) { // Verifies if the actual is shortest than the old one
         int min = Integer.MAX_VALUE, min_index = -1;
         instructions += 32;
 
@@ -30,10 +30,10 @@ public class Dinamic {
             instructions += numVertex;
             memory += (numVertex + 1) * 32;
 
-            if (marcas[v] == false && vertices[v] <= min) {
+            if (checked[v] == false && distance[v] <= min) {
                 instructions++;
 
-                min = vertices[v];
+                min = distance[v];
                 min_index = v;
 
                 instructions += 2;
@@ -61,23 +61,23 @@ public class Dinamic {
     public void Dijkstra(int graph[][], int src) { 
         instructions++;
         memory += 32 * numVertex;
-        int resultMatrix[] = new int[numVertex];
+        int distance[] = new int[numVertex];
 
         instructions++;
         memory += 1 * numVertex;
-        Boolean markMatrix[] = new Boolean[numVertex];
+        Boolean checked[] = new Boolean[numVertex];
 
         instructions += 3;
         memory += 32;
-        for (int i = 0; i < numVertex; i++) { // This method fill the resultMatrix and markMatrix with default values
-            instructions++;
-            resultMatrix[i] = Integer.MAX_VALUE;
-            instructions++;
-            markMatrix[i] = false;
-        }
+            for (int i = 0; i < numVertex; i++) { // This method fill the resultMatrix and markMatrix with default values
+                instructions++;
+                distance[i] = Integer.MAX_VALUE;
+                instructions++;
+                checked[i] = false;
+            }
 
         instructions++;
-        resultMatrix[src - 1] = 0;
+        distance[src - 1] = 0;
 
         instructions += 3;
         memory += 32;
@@ -85,22 +85,22 @@ public class Dinamic {
 
             instructions++;
             memory += 32;
-            int ligther = minDistance(resultMatrix, markMatrix);
+            int ligther = minDistance(distance, checked);
 
             instructions++;
-            markMatrix[ligther] = true; // This mark the visited vertex.
+            checked[ligther] = true; // This mark the visited vertex.
 
             instructions += 3;
             memory += 32;
             for (int v = 0; v < numVertex; v++) {
                 instructions += 5;
-                if (!markMatrix[v] && graph[ligther][v] != 0
-                        && resultMatrix[ligther] != Integer.MAX_VALUE && resultMatrix[ligther] + graph[ligther][v] < resultMatrix[v]) { 
-                    resultMatrix[v] = resultMatrix[ligther] + graph[ligther][v];
+                if (!checked[v] && graph[ligther][v] != 0
+                        && distance[ligther] != Integer.MAX_VALUE && distance[ligther] + graph[ligther][v] < distance[v]) { 
+                    distance[v] = distance[ligther] + graph[ligther][v];
                 }
             }
         }
-        printSolution(resultMatrix, numVertex, src);
+        printSolution(distance, numVertex, src);
     }
 
     public void printSolution(int dist[], int n, int src) { //This method prints the solution founded by dijkstra
